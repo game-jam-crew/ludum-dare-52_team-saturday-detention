@@ -1,3 +1,4 @@
+using GameJam.System.Data;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +10,7 @@ namespace GameJam.System.View
         
         public void OpenGameScene()
         {
+            GameDataStore.Instance.RefreshDataForNewGame();
             SceneManager.LoadScene("GameScene");
         }
         

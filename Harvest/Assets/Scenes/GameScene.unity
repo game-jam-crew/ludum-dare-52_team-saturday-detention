@@ -944,6 +944,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1342302923}
   - component: {fileID: 1342302924}
+  - component: {fileID: 1342302925}
   m_Layer: 0
   m_Name: OurTree
   m_TagString: Untagged
@@ -1018,6 +1019,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1342302925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342302922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7e57bc2d5dc9684bb0d1c7002d6ff0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _allowConversations: 0
 --- !u!1 &1785693265
 GameObject:
   m_ObjectHideFlags: 0
@@ -1146,7 +1160,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5163279316430530371, guid: 4406d3ec7030faa4f87a9ca270373baa, type: 3}
       propertyPath: m_Name
-      value: '[ ViewManager ]'
+      value: '[ GameViewManager ]'
       objectReference: {fileID: 0}
     - target: {fileID: 6276360611009640243, guid: 4406d3ec7030faa4f87a9ca270373baa, type: 3}
       propertyPath: m_RootOrder

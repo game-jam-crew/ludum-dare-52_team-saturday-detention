@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2855252913037345386
 MonoBehaviour:
@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6c94faaeeb0fcd48ab403ef93bb0213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _chatBubblePrefab: {fileID: 6723708834646215272, guid: 5f72df5b0f2fd1f45899ee5a25326604, type: 3}

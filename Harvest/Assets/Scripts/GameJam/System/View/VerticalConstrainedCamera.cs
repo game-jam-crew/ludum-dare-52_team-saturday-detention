@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameJam.System.Cameras
+namespace GameJam.System.View
 {
     [RequireComponent(typeof(Camera))]
     public class VerticalConstrainedCamera : MonoBehaviour
@@ -13,9 +13,8 @@ namespace GameJam.System.Cameras
         void Start()
         {
             _camera = GetComponent<Camera>();
-            
             var verticalConstrainedSize = SCREEN_HEIGHT * 0.5f;
-            Camera.main.orthographicSize = verticalConstrainedSize;
+            _camera.orthographicSize = verticalConstrainedSize;
         }
     }
 }

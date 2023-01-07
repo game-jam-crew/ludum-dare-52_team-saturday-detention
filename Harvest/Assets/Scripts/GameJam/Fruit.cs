@@ -1,5 +1,6 @@
 using System.Collections;
 using GameJam.System.Data;
+using GameJam.System.Events;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -74,6 +75,7 @@ namespace GameJam
             GameDataStore.Instance.GainPoints(score);
 
             // TODO: TreeHealthUpdate -> fire tree health update event for tree to listen to it.
+            GameEventManager.Instance.RaiseEvent($"FruitTaken{_fruitLifeState}");
             
             Destroy(gameObject);
         }

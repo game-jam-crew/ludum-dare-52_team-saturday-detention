@@ -38,6 +38,27 @@ namespace GameJam
             _moodImageRenderer.sprite = getMoodSprite();
         }
         
+        public void FruitTakenOnTree()
+        {
+            Debug.Log("The tree is NOT happy!");
+            _moodRating -= 0.25f;
+        }
+        
+        public void FruitTakenInAir()
+        {
+            Debug.Log("The tree thinks you are amazing!");
+        }
+        
+        public void FruitTakenOnGround()
+        {
+            Debug.Log("The is unimpressed!");
+        }
+        
+        public void FruitTakenRotten()
+        {
+            Debug.Log("The tree laughs at you!");
+        }
+        
         IEnumerator coordinateFoodSpawning()
         {
             yield return new WaitForSeconds(0.1f);

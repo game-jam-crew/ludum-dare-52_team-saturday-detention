@@ -4,7 +4,7 @@ namespace GameJam.System.Events
 {
     public class GameEventManager : SingletonMonoBehaviour<GameEventManager>
     {
-        HashSet<GameEvent> _listenedEvents = new HashSet<GameEvent>();
+        static HashSet<GameEvent> _listenedEvents = new HashSet<GameEvent>();
         
         public void Register(GameEvent gameEvent)
         {

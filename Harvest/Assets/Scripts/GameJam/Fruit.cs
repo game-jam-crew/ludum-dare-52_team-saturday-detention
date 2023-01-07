@@ -1,4 +1,5 @@
 using System.Collections;
+using GameJam.System.Data;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -14,6 +15,8 @@ namespace GameJam
         
         [SerializeField] float fallSpeed = 450.0f;
         [SerializeField] float fallDistance = 350.0f;
+        
+        [SerializeField] int tempTestingScore = 100;
         
         Vector2 startingPosition;
 
@@ -62,6 +65,10 @@ namespace GameJam
         {
             Destroy(gameObject);
             // TODO: GetPoints
+            
+            // TEMP: exploring concept for UI rendering
+            GameDataStore.Instance.GainPoints(tempTestingScore);
+            
             // OnTree = full points
             // OnGround = half points
             // isBadFruit = 0 points

@@ -1,14 +1,22 @@
 using GameJam.System.Events;
+using UnityEngine;
 
 namespace GameJam.System.Data
 {
     public class GameDataStore : SingletonMonoBehaviour<GameDataStore>
     {
-        int _highScore;
-        int _currentScore;
+        const string HIGH_SCORE_KEY = "DATA_KEY::HIGH_SCORE";
+        
+        static int _highScore;
+        static int _currentScore;
         
         public int HighScore => _highScore;
         public int CurrentScore => _currentScore;
+        
+        void Start()
+        {
+            _highScore = PlayerPrefs.GetInt(HIGH_SCORE_KEY);
+        }
         
         public void RefreshDataForNewGame()
         {
@@ -21,7 +29,13 @@ namespace GameJam.System.Data
             GameEventManager.Instance.RaiseEvent("ScorePointsGained");
 
             if(_currentScore > _highScore)
-                _highScore = _currentScore;
+                syncHighScore(_currentScore);
+        }
+        
+        void syncHighScore(int score)
+        {
+            _highScore = score;
+            PlayerPrefs.SetInt(HIGH_SCORE_KEY, score);
         }
     }
 }

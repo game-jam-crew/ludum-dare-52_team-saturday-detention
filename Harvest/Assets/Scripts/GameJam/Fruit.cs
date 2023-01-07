@@ -5,61 +5,72 @@ using UnityEngine.EventSystems;
 
 namespace GameJam
 {
+    public enum FruitLifeState
+    {
+        OnTree,
+        Falling,
+        OnGround,
+        Rotten,
+    }
+    
     public class Fruit : MonoBehaviour, IPointerClickHandler
     {
-        [SerializeField] bool isOnTree;
-        [SerializeField] bool isFalling;
-        [SerializeField] bool isOnGround;
-        
-        [SerializeField] bool isBad;
-        
+        [SerializeField] float timeOnTree = 0.0f;
         [SerializeField] float fallSpeed = 450.0f;
         [SerializeField] float fallDistance = 350.0f;
-        
         [SerializeField] int tempTestingScore = 100;
+        [SerializeField] Sprite rottenSprite;
         
-        Vector2 startingPosition;
+        SpriteRenderer _spriteRenderer;
+        FruitLifeState _fruitLifeState;
+        Vector2 _startingPosition;
 
         void Start()
         {
-            isOnTree = true;
-            isFalling = false;
-            isOnGround = false;
-            
-            isBad = false;
-            
-            startingPosition = transform.position;
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            _startingPosition = transform.position;
+            _fruitLifeState = FruitLifeState.OnTree;
+            Debug.Log(_fruitLifeState);
+
+            var randomFallDelay = Random.Range(timeOnTree, timeOnTree + 5.0f);
+            StartCoroutine(waitBeforeFall(randomFallDelay));
         }
-        
-        void Update()
+
+        IEnumerator waitBeforeFall(float delaySeconds)
         {
-            // TODO: if !isOnTree, start fall coroutine.
-            if(!isOnTree && !isFalling && !isOnGround)
-            {
-                StartCoroutine(fall());
-            }
+            yield return new WaitForSeconds(delaySeconds);
+
+            _fruitLifeState = FruitLifeState.Falling;
+            Debug.Log(_fruitLifeState);
+            StartCoroutine(fall());
         }
         
         IEnumerator fall()
         {
-            isFalling = true;
             var distanceTraveled = 0.0f;
 
             while(distanceTraveled < fallDistance)
             {
                 distanceTraveled += fallSpeed * Time.deltaTime;
-                Debug.Log($"Fall distance this frame = { distanceTraveled }");
-                
-                transform.position = new Vector2(startingPosition.x, startingPosition.y - distanceTraveled);
+                transform.position = new Vector2(_startingPosition.x, _startingPosition.y - distanceTraveled);
                 
                 yield return null;
             }
             
-            Debug.Log("Done, the fruit is in the dirt.");
-            isFalling = false;
-            isOnGround = true;
-        }
+            _fruitLifeState = FruitLifeState.OnGround;
+            Debug.Log(_fruitLifeState);
             
+            StartCoroutine(delayedRot());
+        }
+
+        IEnumerator delayedRot()
+        {
+            yield return new WaitForSeconds(Random.Range(1.0f, 2.0f));
+            
+            _fruitLifeState = FruitLifeState.Rotten;
+            _spriteRenderer.sprite = rottenSprite;
+            Debug.Log(_fruitLifeState);
+        }
         
         public void OnPointerClick(PointerEventData eventData)
         {

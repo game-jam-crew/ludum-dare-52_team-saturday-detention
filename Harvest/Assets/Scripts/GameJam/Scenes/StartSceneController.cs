@@ -1,18 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class StartSceneController : MonoBehaviour
+namespace GameJam.Scenes
 {
-    // Start is called before the first frame update
-    void Start()
+    public class StartSceneController : MonoBehaviour
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

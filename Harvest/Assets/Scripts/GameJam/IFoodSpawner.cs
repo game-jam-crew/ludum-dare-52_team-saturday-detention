@@ -2,8 +2,8 @@
 {
     public interface IFoodSpawner 
     {
-        bool HasFood();
-        bool SpawnFood(Fruit fruitPrefab);
+        bool CanSpawnFood();
+        bool SpawnFood(Fruit fruitPrefab, float delaySeconds = 0.0f);
         bool DropFood();
     }
 }

@@ -15,11 +15,11 @@ namespace GameJam
     
     public class Fruit : MonoBehaviour, IPointerClickHandler
     {
+        [SerializeField] Sprite rottenSprite;
         [SerializeField] float timeOnTree = 0.0f;
         [SerializeField] float fallSpeed = 450.0f;
         [SerializeField] float fallDistance = 350.0f;
-        [SerializeField] int tempTestingScore = 100;
-        [SerializeField] Sprite rottenSprite;
+        [SerializeField] int baseScore = 100;
         
         SpriteRenderer _spriteRenderer;
         FruitLifeState _fruitLifeState;
@@ -30,7 +30,6 @@ namespace GameJam
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _startingPosition = transform.position;
             _fruitLifeState = FruitLifeState.OnTree;
-            Debug.Log(_fruitLifeState);
 
             var randomFallDelay = Random.Range(timeOnTree, timeOnTree + 5.0f);
             StartCoroutine(waitBeforeFall(randomFallDelay));
@@ -41,7 +40,6 @@ namespace GameJam
             yield return new WaitForSeconds(delaySeconds);
 
             _fruitLifeState = FruitLifeState.Falling;
-            Debug.Log(_fruitLifeState);
             StartCoroutine(fall());
         }
         
@@ -58,7 +56,6 @@ namespace GameJam
             }
             
             _fruitLifeState = FruitLifeState.OnGround;
-            Debug.Log(_fruitLifeState);
             
             StartCoroutine(delayedRot());
         }
@@ -69,22 +66,28 @@ namespace GameJam
             
             _fruitLifeState = FruitLifeState.Rotten;
             _spriteRenderer.sprite = rottenSprite;
-            Debug.Log(_fruitLifeState);
         }
         
         public void OnPointerClick(PointerEventData eventData)
         {
+            var score = deriveScore();
+            GameDataStore.Instance.GainPoints(score);
+
+            // TODO: TreeHealthUpdate -> fire tree health update event for tree to listen to it.
+            
             Destroy(gameObject);
-            // TODO: GetPoints
+        }
+        
+        int deriveScore()
+        {
+            var score = baseScore;
+
+            if(_fruitLifeState == FruitLifeState.OnGround)
+                score = (int) Mathf.Floor(baseScore / 2.0f);
+            if(_fruitLifeState == FruitLifeState.Rotten)
+                score = 0;
             
-            // TEMP: exploring concept for UI rendering
-            GameDataStore.Instance.GainPoints(tempTestingScore);
-            
-            // OnTree = full points
-            // OnGround = half points
-            // isBadFruit = 0 points
-            
-            // TODO: TreeHealthUpdate
+            return score;
         }
     }
 }

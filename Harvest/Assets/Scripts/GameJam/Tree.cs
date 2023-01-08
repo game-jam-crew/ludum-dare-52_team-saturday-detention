@@ -19,6 +19,12 @@ namespace GameJam
         [SerializeField] Fruit _rareFruitPrefab;
 
         [SerializeField] float _moodRating = 1.0f;
+        [SerializeField] float _moodRatingLoss = 0.1f;
+        [SerializeField] float _moodRatingGainFromAirCatch = 0.15f;
+        [SerializeField] float _moodRatingGainFromRotten = 0.01f;
+        
+        [SerializeField] float _moodRegenTickInSeconds = 1.0f;
+        [SerializeField] float _moodRegenAmount = 0.01f;
         [SerializeField] SpriteRenderer _moodImageRenderer;
         [SerializeField] Sprite _happySprite;
         [SerializeField] Sprite _mehSprite;
@@ -31,6 +37,7 @@ namespace GameJam
         {
             _foodSpawners = GetComponentsInChildren<IFoodSpawner>().ToList();
             StartCoroutine(spawnFood());
+            StartCoroutine(regenMood());
             
             _moodImageRenderer.sprite = _angrySprite;
         }
@@ -43,27 +50,38 @@ namespace GameJam
         public void FruitTakenOnTree()
         {
             GameViewManager.Instance.ShowChatFor(gameObject, "OUCH!", 1.0f);
-            _moodRating -= 0.25f;
+            _moodRating -= _moodRatingLoss;
         }
         
         public void FruitTakenInAir()
         {
-            Debug.Log("The tree thinks you are amazing!");
+            GameViewManager.Instance.ShowChatFor(gameObject, "Nice Catch!", 1.0f);
+            _moodRating += _moodRatingGainFromAirCatch;
         }
         
-        public void FruitTakenOnGround()
-        {
-            Debug.Log("The tree is unimpressed!");
-        }
+        public void FruitTakenOnGround() {}
         
         public void FruitTakenRotten()
         {
-            Debug.Log("The tree laughs at you!");
+            GameViewManager.Instance.ShowChatFor(gameObject, "...", 1.0f);
+            _moodRating += _moodRatingGainFromRotten;
         }
         
         public void FruitDropped()
         {
+            if(GameDataStore.Instance.IsFruitAtMax())
+                return;
+
             StartCoroutine(spawnFood());
+        }
+        
+        IEnumerator regenMood()
+        {
+            while(true)
+            {
+                yield return new WaitForSeconds(_moodRegenTickInSeconds);
+                _moodRating += _moodRegenAmount;
+            }
         }
         
         IEnumerator spawnFood()

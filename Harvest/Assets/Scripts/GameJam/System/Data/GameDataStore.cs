@@ -16,7 +16,6 @@ namespace GameJam.System.Data
         public int HighScore => _highScore;
         public int CurrentScore => _currentScore;
         
-        
         void Start()
         {
             _highScore = PlayerPrefs.GetInt(HIGH_SCORE_KEY);

@@ -932,6 +932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentScoreText: {fileID: 2057327529}
+  _gameOverText: {fileID: 0}
 --- !u!1 &1342302922
 GameObject:
   m_ObjectHideFlags: 0
@@ -1041,6 +1042,11 @@ MonoBehaviour:
   _standardFruitPrefab: {fileID: 8265146512264142855, guid: ad66e54e1023add40be765eb3af498fa, type: 3}
   _rareFruitPrefab: {fileID: 8265146512264142855, guid: eef7e3b6add1edb498efa436e860973b, type: 3}
   _moodRating: 1
+  _moodRatingLoss: 0.1
+  _moodRatingGainFromAirCatch: 0.5
+  _moodRatingGainFromRotten: 0.01
+  _moodRegenTickInSeconds: 1
+  _moodRegenAmount: 0.01
   _moodImageRenderer: {fileID: 1881332690}
   _happySprite: {fileID: 21300000, guid: 5505276a02e34864aa7111b30bd87958, type: 3}
   _mehSprite: {fileID: 21300000, guid: 0e190a5d413c0e9439b84df4839dd2b5, type: 3}

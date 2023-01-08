@@ -20,9 +20,6 @@ namespace GameJam
             if(_isSpawningInProgress)
                 return;
             
-            if(GameDataStore.Instance.IsFruitAtMax())
-                return;
-            
             StartCoroutine(spawnFood(fruitPrefab, delaySeconds));
         }
         

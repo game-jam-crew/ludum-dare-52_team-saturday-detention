@@ -40,14 +40,15 @@ namespace GameJam
         {
             yield return new WaitForSeconds(delaySeconds);
 
-            _fruitLifeState = FruitLifeState.Falling;
             StartCoroutine(fall());
         }
-        
+
         IEnumerator fall()
         {
-            var distanceTraveled = 0.0f;
+            _fruitLifeState = FruitLifeState.Falling;
+            GameEventManager.Instance.RaiseEvent($"FruitDropped");
 
+            var distanceTraveled = 0.0f;
             while(distanceTraveled < fallDistance)
             {
                 distanceTraveled += fallSpeed * Time.deltaTime;
@@ -73,10 +74,7 @@ namespace GameJam
         {
             var score = deriveScore();
             GameDataStore.Instance.GainPoints(score);
-
-            // TODO: TreeHealthUpdate -> fire tree health update event for tree to listen to it.
             GameEventManager.Instance.RaiseEvent($"FruitTaken{_fruitLifeState}");
-            
             Destroy(gameObject);
         }
         

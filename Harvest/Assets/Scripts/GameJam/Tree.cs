@@ -8,7 +8,6 @@ namespace GameJam
 {
     public class Tree : MonoBehaviour
     {
-        [SerializeField] bool _allowConversations;
         [SerializeField] Fruit _fruitPrefab;
 
         [SerializeField] float _moodRating = 1.0f;
@@ -18,29 +17,24 @@ namespace GameJam
         [SerializeField] Sprite _sadSprite;
         [SerializeField] Sprite _angrySprite;
         
-        GameObject _chatBubble;
-        
         List<IFoodSpawner> _foodSpawners = new List<IFoodSpawner>();
        
         void Start()
         {
             _foodSpawners = GetComponentsInChildren<IFoodSpawner>().ToList();
-            StartCoroutine(coordinateFoodSpawning());
+            StartCoroutine(spawnFood());
             
             _moodImageRenderer.sprite = _angrySprite;
         }
         
         void Update()
         {
-            if(_allowConversations && _chatBubble == null)
-                spawnChat();
-            
             _moodImageRenderer.sprite = getMoodSprite();
         }
         
         public void FruitTakenOnTree()
         {
-            Debug.Log("The tree is NOT happy!");
+            GameViewManager.Instance.ShowChatFor(gameObject, "OUCH!", 1.0f);
             _moodRating -= 0.25f;
         }
         
@@ -51,7 +45,7 @@ namespace GameJam
         
         public void FruitTakenOnGround()
         {
-            Debug.Log("The is unimpressed!");
+            Debug.Log("The tree is unimpressed!");
         }
         
         public void FruitTakenRotten()
@@ -59,7 +53,12 @@ namespace GameJam
             Debug.Log("The tree laughs at you!");
         }
         
-        IEnumerator coordinateFoodSpawning()
+        public void FruitDropped()
+        {
+            StartCoroutine(spawnFood());
+        }
+        
+        IEnumerator spawnFood()
         {
             yield return new WaitForSeconds(0.1f);
             
@@ -71,11 +70,6 @@ namespace GameJam
                 var randomSpawnDelay = Random.Range(0.0F, 5.0F);
                 spawner.SpawnFood(_fruitPrefab, randomSpawnDelay);
             }
-        }
-        
-        void spawnChat()
-        {
-            _chatBubble = GameViewManager.Instance.ShowChatFor(gameObject, "Hello Ian!");
         }
         
         Sprite getMoodSprite()

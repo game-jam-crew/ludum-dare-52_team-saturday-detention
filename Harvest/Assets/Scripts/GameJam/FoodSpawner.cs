@@ -5,30 +5,21 @@ namespace GameJam
 {
     public class FoodSpawner : MonoBehaviour, IFoodSpawner
     {
+        [SerializeField] float _spawnLocationOffset = 20;
+        
         bool _isSpawningInProgress;
-        Fruit _fruit;
         
         public bool CanSpawnFood()
         {
-            return !_isSpawningInProgress && _fruit == null;
+            return !_isSpawningInProgress;
         }
 
-        public bool SpawnFood(Fruit fruitPrefab, float delaySeconds = 0.0f)
+        public void SpawnFood(Fruit fruitPrefab, float delaySeconds = 0.0f)
         {
-            if(_fruit != null || _isSpawningInProgress) 
-                return false;
-         
-            StartCoroutine(spawnFood(fruitPrefab, delaySeconds));
-            return true;
-        }
-        
-        public bool DropFood()
-        {
-            if(_fruit == null || _isSpawningInProgress) 
-                return false;
+            if(_isSpawningInProgress)
+                return;
             
-            _fruit = null;
-            return true;
+            StartCoroutine(spawnFood(fruitPrefab, delaySeconds));
         }
         
         IEnumerator spawnFood(Fruit fruitPrefab, float delaySeconds = 0.0f)
@@ -38,7 +29,11 @@ namespace GameJam
             if(delaySeconds > 0)
                 yield return new WaitForSeconds(delaySeconds);
             
-            _fruit = Instantiate(fruitPrefab, transform.position, Quaternion.identity);
+            var offsetX = Random.Range(_spawnLocationOffset * -1, _spawnLocationOffset);
+            var offsetY = Random.Range(_spawnLocationOffset * -1, _spawnLocationOffset);
+            var spawnLocation = new Vector2(transform.position.x + offsetX, transform.position.y + offsetY);
+
+            Instantiate(fruitPrefab, spawnLocation, Quaternion.identity, transform);
             _isSpawningInProgress = false;
         }
     }

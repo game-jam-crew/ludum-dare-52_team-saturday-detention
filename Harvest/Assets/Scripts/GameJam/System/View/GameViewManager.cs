@@ -13,7 +13,7 @@ namespace GameJam.System.View
             GameDataStore.Instance.RefreshDataForNewGame();
             SceneManager.LoadScene("GameScene");
         }
-        
+
         public GameObject ShowChatFor(GameObject chatSource, string message)
             => showChat(chatSource, message, null);
                 

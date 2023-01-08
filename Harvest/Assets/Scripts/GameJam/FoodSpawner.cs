@@ -1,4 +1,5 @@
 using System.Collections;
+using GameJam.System.Data;
 using UnityEngine;
 
 namespace GameJam
@@ -19,6 +20,9 @@ namespace GameJam
             if(_isSpawningInProgress)
                 return;
             
+            if(GameDataStore.Instance.IsFruitAtMax())
+                return;
+            
             StartCoroutine(spawnFood(fruitPrefab, delaySeconds));
         }
         
@@ -34,6 +38,7 @@ namespace GameJam
             var spawnLocation = new Vector2(transform.position.x + offsetX, transform.position.y + offsetY);
 
             Instantiate(fruitPrefab, spawnLocation, Quaternion.identity, transform);
+            GameDataStore.Instance.GainFruitInLevel();
             _isSpawningInProgress = false;
         }
     }

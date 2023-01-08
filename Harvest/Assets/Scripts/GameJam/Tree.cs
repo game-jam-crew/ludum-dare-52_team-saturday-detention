@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using GameJam.System.Data;
 using GameJam.System.View;
 using UnityEngine;
 
@@ -68,7 +69,7 @@ namespace GameJam
         IEnumerator spawnFood()
         {
             yield return new WaitForSeconds(0.1f);
-            
+
             foreach(var spawner in _foodSpawners)
             {
                 if(!spawner.CanSpawnFood())

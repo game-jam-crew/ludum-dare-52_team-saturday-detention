@@ -1036,8 +1036,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7e57bc2d5dc9684bb0d1c7002d6ff0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _allowConversations: 0
-  _fruitPrefab: {fileID: 8265146512264142855, guid: ad66e54e1023add40be765eb3af498fa, type: 3}
+  _rottenFruitPrefab: {fileID: 8265146512264142855, guid: 39c3c6d74542262449a7aa3f0787caa4, type: 3}
+  _poorFruitPrefab: {fileID: 8265146512264142855, guid: ecd33bbf6dd77b744aa56ee281b29867, type: 3}
+  _standardFruitPrefab: {fileID: 8265146512264142855, guid: ad66e54e1023add40be765eb3af498fa, type: 3}
+  _rareFruitPrefab: {fileID: 8265146512264142855, guid: eef7e3b6add1edb498efa436e860973b, type: 3}
   _moodRating: 1
   _moodImageRenderer: {fileID: 1881332690}
   _happySprite: {fileID: 21300000, guid: 5505276a02e34864aa7111b30bd87958, type: 3}

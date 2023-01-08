@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8265146512264142854}
   - component: {fileID: 8265146512264142855}
   m_Layer: 0
-  m_Name: Fruit
+  m_Name: StandardFruit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 99b007852ba1a5340944cfdd11290d1b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 07c336e892bd1a84a9e0fed196251974, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

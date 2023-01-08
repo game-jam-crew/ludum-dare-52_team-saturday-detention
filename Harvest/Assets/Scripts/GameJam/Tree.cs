@@ -8,7 +8,14 @@ namespace GameJam
 {
     public class Tree : MonoBehaviour
     {
-        [SerializeField] Fruit _fruitPrefab;
+        const float MOOD_HAPPY_RATING_THRESHOLD = 0.85f;
+        const float MOOD_STANDARD_RATING_THRESHOLD = 0.5f;
+        const float MOOD_POOR_RATING_THRESHOLD = 0.1f;        
+        
+        [SerializeField] Fruit _rottenFruitPrefab;
+        [SerializeField] Fruit _poorFruitPrefab;
+        [SerializeField] Fruit _standardFruitPrefab;
+        [SerializeField] Fruit _rareFruitPrefab;
 
         [SerializeField] float _moodRating = 1.0f;
         [SerializeField] SpriteRenderer _moodImageRenderer;
@@ -68,22 +75,38 @@ namespace GameJam
                     continue;
 
                 var randomSpawnDelay = Random.Range(0.0F, 5.0F);
-                spawner.SpawnFood(_fruitPrefab, randomSpawnDelay);
+                spawner.SpawnFood(fruitToDrop(), randomSpawnDelay);
             }
         }
         
         Sprite getMoodSprite()
         {
-            if(_moodRating >= 0.85f)
+            if(_moodRating >= MOOD_HAPPY_RATING_THRESHOLD)
                 return _happySprite;
 
-            if(_moodRating >= 0.5f)
+            if(_moodRating >= MOOD_STANDARD_RATING_THRESHOLD)
                 return _mehSprite;
 
-            if(_moodRating >= 0.1f)
+            if(_moodRating >= MOOD_POOR_RATING_THRESHOLD)
                 return _sadSprite;
             
             return _angrySprite;
+        }
+        
+        Fruit fruitToDrop()
+        {
+            var rando = Random.Range(0.0f, 1.0f);
+            
+            if(_moodRating >= MOOD_HAPPY_RATING_THRESHOLD)
+                return rando >= 0.70 ? _rareFruitPrefab : _standardFruitPrefab;
+
+            if(_moodRating >= MOOD_STANDARD_RATING_THRESHOLD)
+                return rando >= 0.20 ? _standardFruitPrefab : _poorFruitPrefab;
+
+            if(_moodRating >= MOOD_POOR_RATING_THRESHOLD)
+                return rando >= 0.20 ? _poorFruitPrefab : _rottenFruitPrefab;
+            
+            return _rottenFruitPrefab;
         }
     }
 }

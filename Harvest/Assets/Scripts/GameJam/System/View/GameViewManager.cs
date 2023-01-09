@@ -20,15 +20,15 @@ namespace GameJam.System.View
             GameDataStore.Instance.ResetGameData();
             SceneManager.LoadScene("StartScene");
         }
-        public GameObject ShowChatFor(GameObject chatSource, string message)
-            => showChat(chatSource, message, null);
+        public GameObject ShowChatAt(Vector2 location, string message)
+            => showChat(location, message, null);
                 
-        public GameObject ShowChatFor(GameObject chatSource, string message, float displayDurationSeconds)
-            => showChat(chatSource, message, displayDurationSeconds);
+        public GameObject ShowChatAt(Vector2 location, string message, float displayDurationSeconds)
+            => showChat(location, message, displayDurationSeconds);
         
-        GameObject showChat(GameObject chatSource, string message, float? displayDurationSeconds = null)
+        GameObject showChat(Vector2 location, string message, float? displayDurationSeconds = null)
         {
-            var chatBubbleGameObject = Instantiate(_chatBubblePrefab, Vector2.zero, Quaternion.identity, chatSource.transform);
+            var chatBubbleGameObject = Instantiate(_chatBubblePrefab, location, Quaternion.identity);
             var chatBubble = chatBubbleGameObject.GetComponent<ChatBubble>();
             chatBubble.DisplayChat(message, displayDurationSeconds);
             return chatBubbleGameObject;

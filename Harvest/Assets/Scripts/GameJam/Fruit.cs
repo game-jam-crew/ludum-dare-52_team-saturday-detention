@@ -17,14 +17,13 @@ namespace GameJam
     public class Fruit : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField] Sprite rottenSprite;
-        [SerializeField] float timeOnTree = 0.0f;
         [SerializeField] float fallSpeed = 450.0f;
-        [SerializeField] float fallDistance = 350.0f;
         [SerializeField] int baseScore = 100;
-        
+
         SpriteRenderer _spriteRenderer;
         FruitLifeState _fruitLifeState;
         Vector2 _startingPosition;
+        float _fallDistance = 350.0f;
 
         void Start()
         {
@@ -32,7 +31,7 @@ namespace GameJam
             _startingPosition = transform.position;
             _fruitLifeState = FruitLifeState.OnTree;
 
-            var randomFallDelay = Random.Range(timeOnTree, timeOnTree + 5.0f);
+            var randomFallDelay = Random.Range(1.0f, 7.5f);
             StartCoroutine(waitBeforeFall(randomFallDelay));
         }
 
@@ -48,8 +47,9 @@ namespace GameJam
             _fruitLifeState = FruitLifeState.Falling;
             GameEventManager.Instance.RaiseEvent($"FruitDropped");
 
+            
             var distanceTraveled = 0.0f;
-            while(distanceTraveled < fallDistance)
+            while(distanceTraveled < _fallDistance)
             {
                 distanceTraveled += fallSpeed * Time.deltaTime;
                 transform.position = new Vector2(_startingPosition.x, _startingPosition.y - distanceTraveled);

@@ -6,9 +6,16 @@ namespace GameJam
 {
     public class FoodSpawner : MonoBehaviour, IFoodSpawner
     {
-        [SerializeField] float _spawnLocationOffset = 20;
+        [SerializeField] SpriteRenderer _editorImage;
+        [SerializeField] float _spawnLocationOffsetX = 17;
+        [SerializeField] float _spawnLocationOffsetY = 40;
         
         bool _isSpawningInProgress;
+        
+        void Awake()
+        {
+            _editorImage.enabled = false;
+        }
         
         public bool CanSpawnFood()
         {
@@ -30,8 +37,8 @@ namespace GameJam
             if(delaySeconds > 0)
                 yield return new WaitForSeconds(delaySeconds);
             
-            var offsetX = Random.Range(_spawnLocationOffset * -1, _spawnLocationOffset);
-            var offsetY = Random.Range(_spawnLocationOffset * -1, _spawnLocationOffset);
+            var offsetX = Random.Range(_spawnLocationOffsetX * -1, _spawnLocationOffsetX);
+            var offsetY = Random.Range(_spawnLocationOffsetY * -1, _spawnLocationOffsetY);
             var spawnLocation = new Vector2(transform.position.x + offsetX, transform.position.y + offsetY);
 
             Instantiate(fruitPrefab, spawnLocation, Quaternion.identity, transform);

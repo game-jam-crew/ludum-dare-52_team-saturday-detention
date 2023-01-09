@@ -19,6 +19,8 @@ namespace GameJam
         [SerializeField] Fruit _standardFruitPrefab;
         [SerializeField] Fruit _rareFruitPrefab;
 
+        [SerializeField] GameObject _chatBubbleSpawnLocation;
+        
         [SerializeField] SpriteRenderer _moodImageRenderer;
         [SerializeField] Sprite _happySprite;
         [SerializeField] Sprite _mehSprite;
@@ -49,15 +51,38 @@ namespace GameJam
             _moodImageRenderer.sprite = getMoodSprite();
         }
         
+        int _lastOnTreeMessage = 0;
         public void FruitTakenOnTree()
         {
-            GameViewManager.Instance.ShowChatFor(gameObject, "OUCH!", 1.0f);
+            var messages = new [] 
+            { 
+                "Wait until they fall!",
+                "Not On The Tree!", 
+                "OUCH! Stop it!",
+                "I thought we were friends!",
+                "It hurts! It HURTS SO BAD!",
+            };
+
+            showChat(messages[_lastOnTreeMessage], 0.5f);
             adjustMoodRating(_moodRatingLoss);
+                        
+            _lastOnTreeMessage += 1;
+            if(_lastOnTreeMessage >= messages.Length - 1)
+                _lastOnTreeMessage = 0;
         }
         
         public void FruitTakenInAir()
         {
-            GameViewManager.Instance.ShowChatFor(gameObject, "Nice Catch!", 1.0f);
+            var messages = new [] 
+            { 
+                "Nice Catch!", 
+                "You light up my day",
+                "Fantastic!",
+                "I'm glad we are friends.",
+                "You're the coolest player around!",
+            };
+            var index = Random.Range(0, messages.Length);
+            showChat(messages[index], 0.5f);
             adjustMoodRating(_moodRatingGainFromAirCatch);
         }
         
@@ -65,7 +90,6 @@ namespace GameJam
         
         public void FruitTakenRotten()
         {
-            GameViewManager.Instance.ShowChatFor(gameObject, "...", 1.0f);
             adjustMoodRating(_moodRatingGainFromRotten);
         }
         
@@ -78,6 +102,15 @@ namespace GameJam
             }
 
             StartCoroutine(spawnFood());
+        }
+        
+        void showChat(string message, float duration)
+        {
+            var position = _chatBubbleSpawnLocation.transform.position;
+            var x = position.x + Random.Range(-20, 20);
+            var y = position.y + Random.Range(-20, 20);
+            var location = new Vector2(x, y); 
+            GameViewManager.Instance.ShowChatAt(location, message, duration);
         }
         
         IEnumerator regenMood()

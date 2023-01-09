@@ -1,8 +1,9 @@
 # Ludum Dare 52 - Harvest
 
-### Doc
-https://docs.google.com/document/d/12_lmLObdvvwuVNp2cFNk9cXdTe_cy2IEShLLqE6vH6U/edit?usp=sharing
-
 ### Display
 Vertical Height
 768 x 1024
+
+### Issues
+- Weird screen/canvas rendering on different monitor sizes. It was a mistake to try to constrain the width of the game for a 48 hour game jam without knowing how to do that. Will have to look into the concept more later.
+- Code got messier as the deadline got closer... oof.

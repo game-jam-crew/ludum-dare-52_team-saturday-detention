@@ -73,7 +73,7 @@ namespace GameJam
         {
             if(GameDataStore.Instance.IsFruitAtMax())
             {
-                GameViewManager.Instance.TriggerGameOver();
+                GameDataStore.Instance.TriggerGameOverTimer();
                 return;
             }
 

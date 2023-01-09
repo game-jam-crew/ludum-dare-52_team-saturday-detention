@@ -1,13 +1,14 @@
-using GameJam.System.Data;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using GameJam.System.Data;
 
 namespace GameJam.System.View
 {
     public class GameViewManager : SingletonMonoBehaviour<GameViewManager>
     {
+       
         [SerializeField] GameObject _chatBubblePrefab;
-        
+       
         public void OpenGameScene()
         {
             GameDataStore.Instance.ResetGameData();
@@ -19,12 +20,6 @@ namespace GameJam.System.View
             GameDataStore.Instance.ResetGameData();
             SceneManager.LoadScene("StartScene");
         }
-
-        public void TriggerGameOver()
-        {
-            OpenStartScene();
-        }
-        
         public GameObject ShowChatFor(GameObject chatSource, string message)
             => showChat(chatSource, message, null);
                 
@@ -38,5 +33,6 @@ namespace GameJam.System.View
             chatBubble.DisplayChat(message, displayDurationSeconds);
             return chatBubbleGameObject;
         }
+
     }
 }

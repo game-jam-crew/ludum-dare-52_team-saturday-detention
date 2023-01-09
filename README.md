@@ -1,5 +1,7 @@
 # Ludum Dare 52 - Harvest
 
+https://www.youtube.com/watch?v=UjmHkbpNr7A&list=PL0vLY5Mt4p2VSZdXJI-KY4XcdwNHUxcGV
+
 ### Display
 Vertical Height
 768 x 1024

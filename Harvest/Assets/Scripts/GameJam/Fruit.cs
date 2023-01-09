@@ -17,13 +17,13 @@ namespace GameJam
     public class Fruit : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField] Sprite rottenSprite;
-        [SerializeField] float fallSpeed = 450.0f;
         [SerializeField] int baseScore = 100;
 
         SpriteRenderer _spriteRenderer;
         FruitLifeState _fruitLifeState;
         Vector2 _startingPosition;
         float _fallDistance = 350.0f;
+        float fallSpeed = 350.0f;
 
         void Start()
         {

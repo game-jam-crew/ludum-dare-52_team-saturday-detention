@@ -131,7 +131,7 @@ namespace GameJam
                 if(!spawner.CanSpawnFood())
                     continue;
 
-                var randomSpawnDelay = Random.Range(0.0F, 5.0F);
+                var randomSpawnDelay = Random.Range(0.0F, 20.0F);
                 spawner.SpawnFood(fruitToDrop(), randomSpawnDelay);
             }
         }

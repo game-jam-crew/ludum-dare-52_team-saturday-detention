@@ -10,6 +10,8 @@ namespace GameJam.System.View
         
         public void OpenGameScene()
         {
+            Debug.Log("OPEN GAME SCENE");
+            
             GameDataStore.Instance.ResetGameData();
             SceneManager.LoadScene("GameScene");
         }

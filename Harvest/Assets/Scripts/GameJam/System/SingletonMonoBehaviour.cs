@@ -31,7 +31,7 @@ namespace GameJam.System
             if (_instance == null)
             {
                 _instance = this as T;
-                DontDestroyOnLoad(gameObject);
+                // DontDestroyOnLoad(gameObject); // causes scenes to stop loading after a few, need to investigate how to do this corectly.
             }
             else
             {

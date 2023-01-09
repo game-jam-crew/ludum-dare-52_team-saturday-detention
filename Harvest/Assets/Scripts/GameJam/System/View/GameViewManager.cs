@@ -10,10 +10,21 @@ namespace GameJam.System.View
         
         public void OpenGameScene()
         {
-            GameDataStore.Instance.RefreshDataForNewGame();
+            GameDataStore.Instance.ResetGameData();
             SceneManager.LoadScene("GameScene");
         }
+        
+        public void OpenStartScene()
+        {
+            GameDataStore.Instance.ResetGameData();
+            SceneManager.LoadScene("StartScene");
+        }
 
+        public void TriggerGameOver()
+        {
+            OpenStartScene();
+        }
+        
         public GameObject ShowChatFor(GameObject chatSource, string message)
             => showChat(chatSource, message, null);
                 

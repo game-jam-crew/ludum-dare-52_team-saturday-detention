@@ -6,7 +6,7 @@ namespace GameJam.System.Data
     public class GameDataStore : SingletonMonoBehaviour<GameDataStore>
     {
         const string HIGH_SCORE_KEY = "DATA_KEY::HIGH_SCORE";
-        const int MAX_FRUIT_PER_LEVEL = 50;
+        const int MAX_FRUIT_PER_LEVEL = 20;
         
         static int _highScore;
         static int _currentScore;
@@ -20,13 +20,13 @@ namespace GameJam.System.Data
         {
             _highScore = PlayerPrefs.GetInt(HIGH_SCORE_KEY);
         }
-
+        
         public bool IsFruitAtMax()
         {
             return _fruitInLevel >= MAX_FRUIT_PER_LEVEL;
         }
         
-        public void RefreshDataForNewGame()
+        public void ResetGameData()
         {
             _currentScore = 0;
             _fruitInLevel = 0;

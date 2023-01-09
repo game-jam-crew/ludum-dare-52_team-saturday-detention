@@ -9,6 +9,7 @@ namespace GameJam
 {
     public class Tree : MonoBehaviour
     {
+        const float MOOD_MAX_RATING = 1.0f;
         const float MOOD_HAPPY_RATING_THRESHOLD = 0.85f;
         const float MOOD_STANDARD_RATING_THRESHOLD = 0.5f;
         const float MOOD_POOR_RATING_THRESHOLD = 0.1f;        
@@ -19,7 +20,7 @@ namespace GameJam
         [SerializeField] Fruit _rareFruitPrefab;
 
         [SerializeField] float _moodRating = 1.0f;
-        [SerializeField] float _moodRatingLoss = 0.1f;
+        [SerializeField] float _moodRatingLoss = -0.15f;
         [SerializeField] float _moodRatingGainFromAirCatch = 0.15f;
         [SerializeField] float _moodRatingGainFromRotten = 0.01f;
         
@@ -50,13 +51,13 @@ namespace GameJam
         public void FruitTakenOnTree()
         {
             GameViewManager.Instance.ShowChatFor(gameObject, "OUCH!", 1.0f);
-            _moodRating -= _moodRatingLoss;
+            adjustMoodRating(_moodRatingLoss);
         }
         
         public void FruitTakenInAir()
         {
             GameViewManager.Instance.ShowChatFor(gameObject, "Nice Catch!", 1.0f);
-            _moodRating += _moodRatingGainFromAirCatch;
+            adjustMoodRating(_moodRatingGainFromAirCatch);
         }
         
         public void FruitTakenOnGround() {}
@@ -64,13 +65,16 @@ namespace GameJam
         public void FruitTakenRotten()
         {
             GameViewManager.Instance.ShowChatFor(gameObject, "...", 1.0f);
-            _moodRating += _moodRatingGainFromRotten;
+            adjustMoodRating(_moodRatingGainFromRotten);
         }
         
         public void FruitDropped()
         {
             if(GameDataStore.Instance.IsFruitAtMax())
+            {
+                GameViewManager.Instance.TriggerGameOver();
                 return;
+            }
 
             StartCoroutine(spawnFood());
         }
@@ -80,7 +84,7 @@ namespace GameJam
             while(true)
             {
                 yield return new WaitForSeconds(_moodRegenTickInSeconds);
-                _moodRating += _moodRegenAmount;
+                adjustMoodRating(_moodRegenAmount);
             }
         }
         
@@ -96,6 +100,14 @@ namespace GameJam
                 var randomSpawnDelay = Random.Range(0.0F, 5.0F);
                 spawner.SpawnFood(fruitToDrop(), randomSpawnDelay);
             }
+        }
+        
+        void adjustMoodRating(float amount)
+        {
+            _moodRating += amount;
+            
+            if(_moodRating < 0) _moodRating = 0;
+            if(_moodRating > MOOD_MAX_RATING) _moodRating = MOOD_MAX_RATING;
         }
         
         Sprite getMoodSprite()

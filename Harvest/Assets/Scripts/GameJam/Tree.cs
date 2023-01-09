@@ -19,18 +19,19 @@ namespace GameJam
         [SerializeField] Fruit _standardFruitPrefab;
         [SerializeField] Fruit _rareFruitPrefab;
 
-        [SerializeField] float _moodRating = 1.0f;
-        [SerializeField] float _moodRatingLoss = -0.15f;
-        [SerializeField] float _moodRatingGainFromAirCatch = 0.15f;
-        [SerializeField] float _moodRatingGainFromRotten = 0.01f;
-        
-        [SerializeField] float _moodRegenTickInSeconds = 1.0f;
-        [SerializeField] float _moodRegenAmount = 0.01f;
         [SerializeField] SpriteRenderer _moodImageRenderer;
         [SerializeField] Sprite _happySprite;
         [SerializeField] Sprite _mehSprite;
         [SerializeField] Sprite _sadSprite;
         [SerializeField] Sprite _angrySprite;
+        
+        [SerializeField] float _moodRating = 1.0f;
+        float _moodRatingLoss = -0.15f;
+        float _moodRatingGainFromAirCatch = 0.15f;
+        float _moodRatingGainFromRotten = 0.01f;
+        
+        float _moodRegenTickInSeconds = 1.0f;
+        float _moodRegenAmount = 0.01f;
         
         List<IFoodSpawner> _foodSpawners = new List<IFoodSpawner>();
        
@@ -91,7 +92,7 @@ namespace GameJam
         IEnumerator spawnFood()
         {
             yield return new WaitForSeconds(0.1f);
-
+            
             foreach(var spawner in _foodSpawners)
             {
                 if(!spawner.CanSpawnFood())

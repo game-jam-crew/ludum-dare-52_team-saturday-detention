@@ -72,6 +72,13 @@ namespace GameJam
         
         public void OnPointerClick(PointerEventData eventData)
         {
+            // TODO: fix bug.
+            // This is required as spawners stop spawning if the fruit is not dropped.
+            // When fruit clicked while on the tree, it never fires the drop event.
+            // It is possible this just might need a rename to something like "FruitLeavesTree".
+            if(_fruitLifeState == FruitLifeState.OnTree)
+                GameEventManager.Instance.RaiseEvent($"FruitDropped");
+            
             var score = deriveScore();
             GameDataStore.Instance.GainPoints(score);
             GameEventManager.Instance.RaiseEvent($"FruitTaken{_fruitLifeState}");

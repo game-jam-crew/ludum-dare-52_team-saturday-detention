@@ -6,7 +6,7 @@ namespace GameJam.System.Data
     public class GameDataStore : SingletonMonoBehaviour<GameDataStore>
     {
         const string HIGH_SCORE_KEY = "DATA_KEY::HIGH_SCORE";
-        const int MAX_FRUIT_PER_LEVEL = 20;
+        const int MAX_FRUIT_PER_LEVEL = 50;
         
         static int _highScore;
         static int _currentScore;
